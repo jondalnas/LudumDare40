@@ -60,9 +60,8 @@ public class PlayerController : MonoBehaviour {
 			shootingCooldownTimer = 0;
 			Game.bullets--;
 
-			Vector3 playerRotation = transform.rotation.eulerAngles;
-			playerRotation.z += 90;
-			GameObject.Instantiate(bullet, barrel.position, Quaternion.Euler(playerRotation));
+			Vector2 shotRotation = barrel.position-Camera.main.ScreenToWorldPoint(Input.mousePosition);
+			GameObject.Instantiate(bullet, barrel.position, Quaternion.Euler(new Vector3(0, 0, Mathf.Atan2(shotRotation.y, shotRotation.x) * Mathf.Rad2Deg + 90.0f)));
 			anim.SetBool("Shooting Gun", true);
 
 			GetComponent<AudioSource>().clip = sounds[1];
